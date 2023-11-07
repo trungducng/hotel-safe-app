@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import PinCheck from './components/PinCheck';
+import PinInput from './components/PinInput';
 
 function App() {
+  const [pinInput, setPin] = useState('');
+  const [pinStore, setPinStore] = useState('');
+
+  const handleChangePinValue = (pinValue) => {
+      if (pinInput.length < 4) {
+        setPin((prev) => prev + pinValue);
+      }
+  }
+
+  const clearPinInput = () => {
+    setPin('');
+  }
+
+  const handleSubmit = (pinValue) => {
+    setPinStore(pinValue);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PinInput pinInput={pinInput} setPinStore={handleSubmit} setPinValue={handleChangePinValue} clearPinInput={clearPinInput} />
+      <PinCheck pinStore={pinStore} pinInput={pinInput} />
     </div>
   );
 }
