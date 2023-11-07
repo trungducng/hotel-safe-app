@@ -2,20 +2,13 @@ import './PinCheck.css';
 import { MAX_LENGTH, INVALID_PIN } from '../consts';
 
 function PinCheck(props) {
-    const {
-        pinInput,
-        pinStore
-    } = props;
+    const { pinInput,pinStore } = props;
 
     const isPinValidPin = pinStore !== pinInput && pinInput.length === MAX_LENGTH && pinStore.length === MAX_LENGTH;
     const errorMessage = isPinValidPin ? INVALID_PIN : '';
 
     const getPinClass = () => {
-        if (!pinStore) {
-            return 'circle circle-unLock';
-        }
-
-        if (pinStore === pinInput) {
+        if (!pinStore || pinStore === pinInput) {
             return 'circle circle-unLock';
         }
 
@@ -29,7 +22,7 @@ function PinCheck(props) {
     return <div className='container'>
         <textarea className="pinCheck" rows="4" cols="50" value={pinInput} disabled />
         <div className={getPinClass()}></div>
-        <p>{errorMessage ? errorMessage : ''}</p>
+        {errorMessage ? <p id="errorMessage">{errorMessage}</p> : ''}
     </div>
 }
 
